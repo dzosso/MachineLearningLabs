@@ -1,0 +1,299 @@
+\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+%\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{booktabs,array}
+\usepackage{url}
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+
+\setlength\parindent{0pt}
+%\setlength\parskip{-0.5em}
+\begin{document}
+
+{\Large{\textbf{Math 156 ---  Machine Learning --- Summer Session A}}} 
+\paragraph{Time and location:} MWR 09:00--10:50, virtual on Zoom: PMI = 377 051 7025 / Passcode = zXvH38\\
+\url{https://zoom.us/j/3770517025?pwd=VzI2YUFLdTNHdjdFRHo5bWlrRUkvQT09}
+\paragraph{Recitation sections:} T 09:00--10:50, virtual on Zoom (see TA zoom info, below)
+
+
+\paragraph{Course websites:} CCLE and \url{https://github.com/dzosso/MachineLearningLabs}
+
+\paragraph{Instructor:}  Dr. Dominique Zosso\hrule
+\paragraph{E-mail:} zosso@math.ucla.edu\\
+{\footnotesize Howto: \url{www.insidehighered.com/views/2015/04/16/advice-students-so-they-dont-sound-silly-emails-essay}}
+\paragraph{Virtual office hours:} MWR 12:30--1:30pm\\
+Zoom room for class and office hours: PMI = 377 051 7025 / Passcode = zXvH38\\
+\url{https://zoom.us/j/3770517025?pwd=VzI2YUFLdTNHdjdFRHo5bWlrRUkvQT09}
+
+%\textbf{Scheduling an appointment allows me to prepare based on your question/code}\\ To schedule an appointment: \url{https://www.montana.edu/scheduler/login/student/?fac=21129}
+
+
+\paragraph{Teaching Assistant (section 1A):}   Zeyu Wang\hrule
+\paragraph{E-mail:} TBA
+\paragraph{Virtual office hours:}
+Zoom-room for discussion section and virtual office hours:  TBA\\
+
+\paragraph{Teaching Assistant (section 1B):} Jiawei Zhang\hrule
+\paragraph{E-mail:} jwzcharlie@gmail.com
+\paragraph{Virtual office hours:}
+Zoom-room for discussion section and virtual office hours:  TBA\\
+
+
+\paragraph{Course text:} \emph{Pattern Recognition and Machine Learning}, by Christopher~M.~Bishop, Springer, 2006 (ISBN-13: 978-0387-31073-2),
+\emph{plus complementary sources provided where necessary}.
+
+\paragraph{Description:} ``Machine Learning'' is an \emph{introductory course} on mathematical models for pattern recognition and machine learning. The students will become familiar with fundamental concepts such as learning of parametric and non-parametric probability distributions, the curse of dimensionality, correlation analysis and dimensionality reduction,  and concepts of decision theory. Advanced machine learning and pattern recognition problems will be covered, including data classification and clustering, regression, kernel methods, artificial neural networks, and Markov-based models such as hidden Markov models and Markov random fields. While these methods are fairly generic and widely applicable, they will be accompanied and illustrated by practical examples drawn from imaging, computer vision, document and social network analysis, etc.
+
+\paragraph{Learning outcomes:} Upon completion of the course, students will be able to:
+\begin{enumerate}\small\setlength\itemsep{-0.2em}
+\item Describe and understand the mathematics of basic models used in machine learning, and their training
+\item Explain various mathematical approaches to dimensionality reduction with PCA (minimum error, maximum variance, probabilistic)
+\item Understand the mathematical underpinnings of linear models for regression and classification, and kernel-based extensions
+%\item Explain and apply clustering methods.
+\item Understand and apply basic artificial neural network structure and training, from perceptron to multilayer networks
+\item Build, train, and use basic graphical models such as Hidden Markov models (fields and chains)
+\end{enumerate}
+
+\paragraph{Prerequisites:}  courses 115A, 164, 170A or 170E or Statistics 100A, and Computer Science 31 or Program in Computing 10A. Strongly recommended requisite: Program in Computing 16A or Statistics 21. 
+
+
+
+\paragraph{Computing device:} It is important that students be able to use a personal computing device for this class, for completion of some practical classwork. This can technically be any device with a web-browser to run MATLAB online (see below; note that Safari on iOS devices is not optimal). 
+
+\paragraph{Homework:} Homework problems will be assigned regularly. Homework problems are integrative part of the curriculum. It is strongly encouraged to routinely check any paper-and-pencil calculations with MATLAB (Emphasis on: as a check, not to get the solution in the first place). Homework assignments will not be collected, corrected or graded. But, to learn this material (and to do well on exams and quizzes), you should master all of the homework problems. Indeed:
+
+\paragraph{Quizzes:}About 2 times a week, there will be a quiz roughly covering current lectures and homework problems, available as PDF on the course website and due 24 hours later, on gradescope. The quizzes will take you 5--10 minutes to complete, but are not timed. The two lowest (or two missed) quizzes will be dropped, but make-up quizzes will not be given. 
+
+\paragraph{MATLAB assignments:} 8 MATLAB-based lab assignments with practical problems will be posted on the course website. %These \emph{can} be worked on in the computer lab sessions (T 4--5pm, WIL 1-144), where the instructor will be present and ready to assist.  
+Lab code and reports are to be submitted as pdf-files through gradescope, and will be graded. The lowest (or a missed) lab will be dropped.
+
+
+%
+%\paragraph{Why MATLAB?}
+%\begin{enumerate}
+%\item MATLAB handles arrays (boxes of numbers) in a simple way.
+%\item MATLAB  prepares you for more advanced languages like C++ and FORTRAN.
+%\item MATLAB  has a well-designed user interface for easy and speedy programming.
+%Mathematicians, Engineers \& scientists use MATLAB for small, quick projects.
+%\item MATLAB  has built in graphics unlike C++ and FORTRAN.
+%\item MATLAB  tells you where the error is and is very quick to debug.
+%\item Human time is more valuable than computer time. Often an easier programming language is better than a more powerful language.
+%\end{enumerate}
+
+
+\paragraph{Exams:} There will be a midterm, tentatively on \textbf{XXX}, as 24-hour takehome exam (it should take you about 60--75 minutes to complete). There will be a final exam on \textbf{XXX}, as 24-hour takehome exam (it should take you about 90--120 minutes to complete). The final exam will cover the entire semester, but emphasize later parts. Failure to take the final exam will result in an automatic fail grade being assigned. \textbf{All exams are open book: your books and notes are permitted, however, NO other resources (calculators, online tools, friends, etc.) will be allowed during exams.} All exams will become available on the course website as PDF 24 hours before the due date/time.
+
+To take an exam, you will be responsible for
+\begin{itemize}
+\item either: printing the exam, filling it out by hand, scanning your copy, and submitting the resulting pdf to gradescope,
+\item or: downloading the pdf, completing it electronically, and submitting the edited pdf to gradescope.
+\end{itemize}
+
+\paragraph{Grading policy:} 
+7 (out of 9) Quizzes: 20\%, 7 (out of 8) Labs: 20\%,  1 Midterm: 30\%, Final: 30\%.
+%8 (out of 10) Quizzes: 20\%, 6 (out of 7) Labs: 15\%, Project: 15\%, Final: 50\%.\newline
+All scores will be available on gradescope. The instructor will translate scores into letter grades according to Department policy, with an appropriate letter grade distribution in mind.
+
+\paragraph{Grading Scales:} The lab assignments in this course will be graded on the following simplified scale:
+\begin{itemize}
+\item[4 ---] excellent work; no real complaints on content, code commenting or on writing.
+\item[3 ---] work basically correct but missing some details/less clearly argued or commented than I
+would like.
+\item[2 ---] argument mostly correct, but there is a misstep in the mathematics, choice of algorithm.
+An especially poorly written answer, paper or commented code might merit a 2, as well.
+\item[1 ---] serious gaps in the mathematics, some ideas in the right direction, but didn't really get
+anywhere.
+\item[0 ---] didn't do the problem or it was completely wrong.
+\end{itemize}
+
+
+\newpage
+\section*{Getting and Using MATLAB}
+
+\paragraph{Site license:}
+UCLA has a campus-wide license for MATLAB:\\
+ see  \url{https://softwarecentral.ucla.edu/matlab-getmatlab} for more information/instructions.
+
+If you do not want to install MATLAB, locally (it is quite big), you may use ``Apporto''-virtual machines (be in touch with support@pic.ucla.edu for help on that). Most conveniently, though, we suggest using MATLAB on the web: 
+
+\paragraph{MATLAB on the web:}
+To avoid the need of installation, we suggest using MATLAB on the web, instead. This service is available to students, staff, and faculty of UCLA at no cost. The only requirement is to sign up for a MATLAB account with a \texttt{ucla.edu}-email-address.\\
+
+Follow the instructions on \url{https://www.mathworks.com/academia/tah-portal/ucla-31454052.html} to create your UCLA-MATLAB account. Once complete, you have access to MATLAB online at \url{matlab.mathworks.com} (iOS safari browser is discouraged).
+Note that your MATLAB workspace is persistent across sessions, devices, and there is an online filesystem!
+
+\paragraph{\texttt{.m}-files or Livescripts}
+You are encouraged to organize your online filesystem appropriately. It is recommended that for each MATLAB assignment, you create one or more \texttt{.m}-files or livescripts as required. Make sure to include an appropriate amount of comments to make your code understandable. Use \texttt{disp(...)} to print values of variables on the screen, and use plots and figures as suitable. You can create sections to your script (for reporting purposes) by using \texttt{\%\%}-signs. Use comments at the end of the file to discuss results and observations as required. 
+
+\paragraph{publish and submit}
+For each MATLAB assignment, you will need to submit a single .pdf-file to gradescope with your code, experiments, results, and observations. A simple way is to use MATLAB's \textbf{publish}-function to create .pdf-reports. The publish button will run the current file, and render the code along with output (command line and figures) into a single .pdf-file. \textbf{This method is simple enough---it is your responsibility though to make sure the report is complete!}
+
+Note: The publish function \emph{does in general not play well with functions that require parameters, and scripts that include user interaction} (e.g. \texttt{input}). Use a wrapper script that calls such a function with parameters, and include the code of the inner function using \texttt{<include>}.
+
+A few helpful items\footnote{Check \url{https://www.mathworks.com/help/matlab/matlab_prog/marking-up-matlab-comments-for-publishing.html}}:
+\begin{itemize}
+\item Use \verb|%% ...| to create a new section; this embeds all results of a section before moving on to the next.
+\item Use \verb|% comments...| to include your observations.
+\item To include the code of \emph{separate} function files, use \texttt{<include>} \emph{exactly} as follows (extra comment lines and spacing between \verb|%| and \verb|<|, etc., matters!):
+\begin{verbatim}
+%% Beginning of the wrapper script which we will publish
+%
+% <include>SeparateFunctionFileToBeIncludedInTheReport.m</include>
+%
+\end{verbatim}
+\end{itemize}
+
+\paragraph{\LaTeX\ reports}
+Preferably, use \LaTeX\ to properly typeset your report, including background, comments, code, experimental setup, results, discussion, and conclusion.
+%Ideally, use MATweave to produce nice \LaTeX-documents.
+
+Submit your report as a single pdf-file per assignment, through gradescope.
+
+\newpage
+%\section*{Schedule}
+\begin{tabular}{@{}p{0.0275\textwidth}@{}p{0.0625\textwidth}@{}p{0.175\textwidth}@{}p{0.605\textwidth}@{}>{\arraybackslash\raggedleft}p{0.13\textwidth}@{}}
+\toprule
+\multicolumn{3}{@{}l@{}}{\textbf{Tentative class schedule:}} &
+Section numbers (\S{}) refer to the book; topic numbers refer to lecture notes. & %\textbf{Homework}
+\tabularnewline
+\midrule
+M& 6/21& \S1.2, \S1.5, \S1.6 & 1. Course introduction. Recap on linear algebra, probabilities\tabularnewline
+& &\S2.3, \S2.4 & 2. Gaussian, exponential pdf; Learning parametric pdf\tabularnewline
+T & 6/22 && Discussion: HW 1 \& 2, Lab 1\tabularnewline
+W& 6/23& \S2.5 & 3. Learning non-parametric pdf \tabularnewline
+R& 6/24& \S12.1 & 4. PCA: maximum variance, minimum error, high-dimensional PCA\tabularnewline
+&&  \S12.2 & 5. Probabilistic PCA (ML-PCA, EM, Bayesian PCA)\tabularnewline
+F & 6/25& & & \textbf{Lab 1 due} \tabularnewline
+\midrule
+M& 6/28&  \S12.3 & 6. Non-linear latent variable models: kPCA\tabularnewline
+T & 6/29 && Discussion: HW 2, Lab 2 \& 3\tabularnewline
+W& 6/30&   \S3.1 & 7. Linear basis function models, least squares and maximum likelihood \tabularnewline
+R& 7/1& \S3.3 & 8. Bayesian linear regression\tabularnewline
+F & 7/2& & & \textbf{Labs 2 \& 3 due}\tabularnewline
+\midrule
+%W& 2/12&  \S3.4, \S3.5 & 9. Model evidence / comparison / marginal likelihood& \textbf{Lab 4 due}\tabularnewline
+%F & 2/14& & Hands-on\tabularnewline
+%\midrule
+M& 7/5&  &\textbf{INDEPENDENCE DAY HOLIDAY OBSERVED} (no class)\\
+T & 7/6 && Discussion: HW 2, Lab 4\tabularnewline
+W& 7/7&\S4.1 & 10. Discriminant functions; least squares\tabularnewline
+&& \S4.2, \S4.3 & 11. Logistic regression: prob. generative \& discriminative models \tabularnewline
+R& 7/8& & \textbf{MIDTERM EXAM} (24 hour takehome)\tabularnewline
+F & 7/9& & &\textbf{Lab 4 due}\tabularnewline
+\midrule
+M& 7/12& \S14.2, \S14.3 & 12. Mixture of linear classifiers: Boosting and Bagging\tabularnewline
+T & 7/13 && Discussion: HW 2, Lab 5\tabularnewline
+W& 7/14& \S9.1 & 13. k-Means\tabularnewline
+&&  \S9.2, \S9.3 & 14. Gaussian mixture model, Expectation-Maximization\tabularnewline
+R& 7/15& \S6.1, \S6.2 & 16. Dual representation, kernel trick; Constructing kernels\tabularnewline
+&&   \S6.4 & 17. Gaussian processes, GP regression, GP classification\tabularnewline
+F & 7/16& & \textbf{Lab 5 due}\tabularnewline
+\midrule
+M& 7/19& \S7.1 & 18. Support vector machines, k-SVM& \textbf{Lab 6 due}\tabularnewline
+T & 7/20 && Discussion: HW 2, Lab 6 \& 7 \tabularnewline
+W& 7/21& \S4.1.7, \S5.1 & 19. Biological motivation; The perceptron; Feed-forward Network\tabularnewline
+&&  \S5.2, \S5.3 & 20. Network training\tabularnewline
+R& 7/22& \S8.1 & 21. Bayesian Networks\tabularnewline
+&& \S8.3 & 22. Markov Random Fields; Iterated conditional modes\tabularnewline
+F& 7/23 && \textbf{Lab 6 \& 7 due}\\
+\midrule
+M& 7/26& \S13.1, \S13.2 & 23. Hidden Markov Models\tabularnewline
+ && \S13.1, \S13.2 &  23. HMM: forward-backward, Viterbi algorithm \tabularnewline
+T & 7/27 && Discussion: HW 2, Lab 8 \tabularnewline
+W& 7/28& n/a & 15. Spectral clustering\tabularnewline
+ && & Leeway and Review\tabularnewline
+R & 7/29& &  \textbf{FINAL EXAM} (24 hour takehome)\tabularnewline
+\bottomrule
+\end{tabular}
+%Homework numbers refer to problems in the book associated with the section under study. Homework assignments are expected to be completed by the next class meeting. 
+
+%
+%\newpage
+%\section*{Behavioral expectations:}
+%
+%
+%
+%Montana State University expects all students to conduct themselves as honest,
+%responsible, and law-abiding members of the academic community and to respect
+%the rights of other students, members of the faculty and staff, and the public to
+%use, enjoy, and participate in the University programs and facilities. For
+%additional information reference see:\\
+%\url{http://www.montana.edu/policy/student_conduct/}
+%
+%\paragraph{Collaboration:}
+%
+%University policy states that, unless otherwise specified, students may not
+%collaborate on graded material. Any exceptions to this policy will be stated
+%explicitly for individual assignments. If you have any questions about the limits of
+%collaboration, you are expected to ask for clarification.
+%
+%\paragraph{Plagiarism:}
+%
+%Paraphrasing or quoting another's work without citing the source is a form of
+%academic misconduct. Even inadvertent or unintentional misuse or appropriation
+%of another's work (such as relying heavily on source material that is not expressly
+%acknowledged) is considered plagiarism. If you have any questions about using
+%and citing sources, you are expected to ask for clarification.
+%Academic Misconduct
+%Section 420 of the Student Conduct Code describes academic misconduct as
+%including but not limited to plagiarism, cheating, multiple submissions, or
+%facilitating others’ misconduct. Possible sanctions for academic misconduct
+%range from an oral reprimand to expulsion from the University.
+%
+%\paragraph{Academic Expectations:}
+%
+%Section 310.00 in the MSU Conduct Guidelines states that students must:
+%\begin{itemize}
+%\item[A)] be prompt and regular in attending classes;
+%\item[B)] be well prepared for classes;
+%\item[C)] submit required assignments in a timely manner;
+%\item[D)] take exams when scheduled;
+%\item[E)] act in a respectful manner toward other students and the instructor and in
+%a way that does not detract from the learning experience; and
+%\item[F)] make and keep appointments when necessary to meet with the instructor.
+%\end{itemize}In addition to the above items, students are expected to meet any additional
+%course and behavioral standards as defined by the instructor.
+%
+%\paragraph{Withdrawal:}
+%Monday, February 3, 2020, is the last day to Drop without a `W'.
+%No Drops are allowed after Wednesday, April 15, 2020.
+%Classes dropped between these days are graded with a `W'.  
+%
+%Dropping a graduate course after that deadline has severe ramifications due to tuition waiver and other graduate policies. \textbf{Make sure to discuss your case with me and your graduate advisor well before the deadline if you experience uncertainties.}
+%
+%
+%\paragraph{Students with Disabilities:}
+%
+%If you have a documented disability for which you are or may be requesting an
+%accommodation(s), you are encouraged to contact your instructor and Disabled
+%Student Services as soon as possible. I will be happy to provide any necessary accommodations once official requests have been filed.
+%
+%\paragraph{Student Educational Records:}
+%
+%All records related to this course are confidential and will not be shared with
+%anyone, including parents, without a signed, written release. If you wish to have
+%information from your records shared with others, you must provide written
+%request/authorization to the office/department. Before giving such authorization,
+%you should understand the purpose of the release and to whom and for how long
+%the information is authorized for release.
+%
+\end{document}
