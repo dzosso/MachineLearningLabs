@@ -1,0 +1,77 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+\usepackage{tikz}
+\usepackage{array,booktabs}
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\x}{\mathbf x}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\u}{\mathbf u}
+\renewcommand{\b}{\mathbf b}
+\renewcommand{\v}{\mathbf v}
+\newcommand{\N}{\mathcal N}
+
+\setlength\parindent{0pt}
+\begin{document}
+
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Homework 2}}\\[2mm]
+
+
+\textbf{Not collected, not graded}.
+
+
+\section{High-dimensional PCA}
+We have seen the original PCA eigenvector problem as $\frac{1}{N}\X^T\X\u_i = \lambda_i\u_i$.
+
+Using $\v_i = \X\u_i$, an equivalent eigenvector problem can be obtained: $\frac{1}{N}\X\X^T\v_i=\lambda_i\v_i$.
+
+For $\v_i$ an eigenvector of the second problem, we find that $\X^T\v_i$ is an eigenvector of the original problem, with eigenvalue $\lambda_i$. 
+\begin{questions}
+\question Assuming that $\v_i$ has unit length, show that $\u_i=\frac{1}{\sqrt{N\lambda_i}}\X^T\v_i$ also has unit length.
+\end{questions}
+
+\section{Probabilistic PCA}
+\begin{questions}
+\question Let $\x$ be a $D$-dimensional random variable having Gaussian distribution $\N(\x\mid\mu,\Sigma)$, and consider the $M$-dimensional random variable given by $\y=\A\x+\b$, where $\A$ is an $M\times D$ matrix. For $M=D$ and $A$ non-singular, show that $\y$ is also Gaussian, and find expressions for its mean and covariance. (Linear algebra extra: What happens for $M<D$ and $M>D$?)
+\question Consider two continuous variables $x,y\in \R$, with joint distribution $p(x,y)$. Let $$\E_x[x\mid y](y):=\int p(x\mid y)x\ dx$$ be the conditional expectation (as a function of $y$), and similarly $$\var_x[x\mid y](y):=\int p(x\mid y)(x-\E_x[x\mid y])^2\ dx$$ the conditional variance. Show that
+\begin{parts}
+\part $\E[x] = \E_y\left[ \E_x[x\mid y] \right]$, and
+\part $\var[x] = \E_y\left[ \var_x[x\mid y] \right] + \var_y\left[ \E_x[x\mid y] \right]$ (Law of total variance).
+\end{parts}
+\question Consider the latent variable $\mathbf z\in\R^D$ with zero-mean unit variance Gaussian distribution $\N(\mathbf z\mid 0,I_D)$. Let the observed variable $\x\in\R^M$ be given by the linear model $$\x=W\mathbf z+\mu+\eta,$$ for some $W\in\R^{M\times D}$, where $\eta$ itself is zero-mean random Gaussian noise, $\N(\eta\mid 0,\sigma^2I_M)$. 
+
+Using the above results 2.(a) and (b), show that the predictive distribution $$p(\x)=\int p(\x\mid \mathbf z)p(\mathbf z)\ d\mathbf z$$ is itself Gaussian, with $p(\x)=\N(\x\mid \mu,C)$, for $C=WW^T+\sigma^2I_M$.
+\question For the same model, by using the results from \S2.3.3 on p.~93, derive the posterior distribution to be
+$$p(\mathbf z\mid \x)=\N(\mathbf z\mid M^{-1}W^T(\x-\mu),\sigma^2M^{-1})$$
+with $M=W^TW+\sigma^2I_M$.
+\end{questions}
+
+\end{document}

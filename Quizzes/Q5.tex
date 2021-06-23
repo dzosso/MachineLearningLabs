@@ -1,0 +1,77 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+%\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{array,booktabs}
+
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\x}{\mathbf x}
+
+\newcommand{\w}{\mathbf w}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\b}{\mathbf b}
+\renewcommand{\t}{\mathbf t}
+\newcommand{\N}{\mathcal N}
+
+\setlength\parindent{0pt}
+\begin{document}
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Quiz 5}}
+
+\hfill\hfill\makebox[0.5\textwidth]{Student Name:\enspace\hrulefill}\\
+
+Consider a binary classification problem where the class-conditional distributions $p(x\mid C_k)$ are Gaussian with mean $\mu_1$, $\mu_2$, and shared covariance matrix $\Sigma$, and where the class priors are $p(C_1)=\pi$ and $p(C_2)=1-\pi$. Draw the decision boundary (reasonably accurate sketch) in the charts below. \\
+
+Circles/ellipses show a level-set of the class-conditional distribution = iso-probability line.\\
+
+\newcommand{\scalefactor}{0.9}
+
+\begin{questions}
+\question[2] $\Sigma=\sigma^2I_2$, $\pi=0.5$:
+
+{\centering\input{classification_isotropic.tikz}\par}\bigskip
+
+\question[1] $\Sigma=\sigma^2I_2$, $\pi\gg0.5$:
+
+{\centering\input{classification_isotropic.tikz}\par}\bigskip
+
+\question[1] $\Sigma$ non-isotropic, $\pi=0.5$:
+
+{\centering\input{classification_nonisotropic.tikz}\par}
+
+\end{questions}
+
+
+
+
+\end{document}

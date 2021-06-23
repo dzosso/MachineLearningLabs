@@ -1,0 +1,89 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+\usepackage{tikz}
+\usepackage{array,booktabs}
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+\DeclareMathOperator{\Conv}{Conv}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\W}{\mathbf W}
+\renewcommand{\S}{\mathbf S}
+\newcommand{\x}{\mathbf x}
+\newcommand{\w}{\mathbf w}
+\newcommand{\z}{\mathbf z}
+\renewcommand{\t}{\mathbf t}
+\renewcommand{\b}{\mathbf b}
+\newcommand{\m}{\mathbf m}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\u}{\mathbf u}
+\renewcommand{\v}{\mathbf v}
+\newcommand{\N}{\mathcal N}
+\newcommand{\bigmid}{\mathrel{}\middle|\mathrel{}}
+
+\setlength\parindent{0pt}
+\begin{document}
+
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Homework 4}}\\[2mm]
+
+
+\textbf{Not collected, not graded}.
+
+
+
+\section{Linear separability}
+Given a set of data points $\{\x_n\}$, $\x_n\in\R^D$, we can define the \emph{convex hull} to be the set 
+$$\Conv(\{\x_n\}) := \left\{ \sum_n\alpha_n\x_n \bigmid \forall n\colon \alpha_n\geq0\ \wedge \sum_n\alpha_n=1 \right\}.$$
+Consider a second set of points $\{\y_m\}$, $\y_m\in\R^D$, and its respective convex hull, $\Conv(\{\y_n\})$. By definition, the two sets of points are linearly separable if there exists a vector $\w$ and a scalar $w_0$ such that $$\forall \x_n\colon \w^T\x_n + w_0 > 0 \qquad\qquad\text{and}\qquad\qquad \forall \y_n\colon \w^T\y_n + w_0 < 0.$$
+\begin{questions}
+\question Show that if their convex hulls intersect, the two sets of points cannot be linearly separable
+\question Conversely, show that if they are linearly separable, their convex hulls do not intersect.
+\end{questions}
+
+\section{Probabilistic generative models (for classification)}
+We first consider the two-class case. As seen in class, the posterior probability for class $C_1$ can be written as 
+$$p(C_1\mid\x)=\frac{p(\x\mid C_1)p(C_1)}{p(\x\mid C_1)p(C_1)+p(\x\mid C_2)p(C_2)}.$$
+Let the class-conditional distribution be Gaussian:
+$$p(\x\mid C_k) := \N(\x\mid \mu_k, \Sigma_k).$$
+\begin{questions}
+\question For shared covariance matrices $\Sigma_k=\Sigma$, it was said that the posterior probability is given by
+$$p(C_1\mid\x) = \sigma(\w^T\x+w_0),$$
+where $\sigma(a):=1/(1+e^{-a})$ is the sigmoid, and where 
+$$\w = \Sigma^{-1}(\mu_1-\mu_2),\qquad\qquad w_0=-\frac{1}{2}\mu_1^T\Sigma^{-1}\mu_1 + \frac{1}{2}\mu_2^T\Sigma^{-1}\mu_2 + \ln\frac{p(C_1)}{p(C_2)}.$$
+Derive that result yourself.
+\question What happens if the covariance matrices are not shared, i.e. $\Sigma_1\neq\Sigma_2$?
+\question Show that for shared covariance matrices the decision boundaries are linear in input space.
+\question What is the influence of the class priors $p(C_1)$ and $p(C_2)$ on the decision boundaries?
+\question Show that the logistic sigmoid function $\sigma(a)$ satisfies:
+\begin{parts}
+\part $\sigma(-a) = 1-\sigma(a),$
+\part $\sigma^{-1}(y) = \ln(y) - \ln(1-y).$
+\end{parts}
+\end{questions}
+\end{document}

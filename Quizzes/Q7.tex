@@ -1,0 +1,78 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+\usepackage{tikz}
+\usepackage{array,booktabs}
+\usepackage{color}
+
+
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\x}{\mathbf x}
+\newcommand{\f}{\mathbf f}
+\newcommand{\w}{\mathbf w}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\b}{\mathbf b}
+\renewcommand{\t}{\mathbf t}
+\newcommand{\N}{\mathcal N}
+\newcommand{\K}{\mathbf K}
+
+
+
+\definecolor{light-gray}{gray}{0.9}
+
+
+\setlength\parindent{0pt}
+\begin{document}
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Quiz 8}}\\
+
+
+
+\hfill\hfill\makebox[0.5\textwidth]{Student Name:\enspace\hrulefill}\\
+
+
+
+\begin{questions}
+
+
+\question[1] What is the minimum performance required from a weak learner in AdaBoost?
+\vspace{1cm}
+\question[1] How does AdaBoost achieve diversity among its constituent weak learners?
+\vspace{1cm}
+\question[1] Is $k_1(\x,\y) := (\x^T\y+2)^2$ a valid kernel?
+\question[1] How about $k_2(\x,\y) := (\x^T\y-2)^2$?
+\question[1] Jeopardy!\begin{quote}``A distribution over functions $f(\x)$, such that for any finite set of samples $\{\x_n\}_{n=1}^N$\\[2mm] the joint distribution of function values $\f$, $f_n=f(\x_n)$, is Gaussian: $p(\f)=\N(\f\mid 0,\K)$.''\end{quote}
+What is$...$
+\end{questions}
+
+
+
+
+\end{document}

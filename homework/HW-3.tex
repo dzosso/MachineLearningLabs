@@ -1,0 +1,90 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+\usepackage{tikz}
+\usepackage{array,booktabs}
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\W}{\mathbf W}
+\renewcommand{\S}{\mathbf S}
+\newcommand{\x}{\mathbf x}
+\newcommand{\w}{\mathbf w}
+\newcommand{\z}{\mathbf z}
+\renewcommand{\t}{\mathbf t}
+\renewcommand{\b}{\mathbf b}
+\newcommand{\m}{\mathbf m}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\u}{\mathbf u}
+\renewcommand{\v}{\mathbf v}
+\newcommand{\N}{\mathcal N}
+
+\setlength\parindent{0pt}
+\begin{document}
+
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Homework 3}}\\[2mm]
+
+
+\textbf{Not collected, not graded}.
+
+
+\section{From probabilistic PCA to linear regression models}
+We have seen that pPCA builds a data model for $\x \in \R^D$ based on latent variable $\z \in \R^M$, for $M<D$:
+$$\x = \W\z + \boldsymbol\mu + \boldsymbol\epsilon$$
+where $\W$ is  a $D\times M$ matrix, $\boldsymbol\mu\in\R^D$, and $\boldsymbol\epsilon$ is Gaussian random noise, $p(\boldsymbol\epsilon)=\N(\boldsymbol\epsilon\mid 0,\sigma^2I_D)$.
+On the other hand, a linear regression model describes the target value $t \in \R$ as a linear model (in $w_0,\w$) from the given input data $\x\in\R^D$, plus noise:
+$$t = w_0 + \w^T\x + \boldsymbol\epsilon$$
+where $w_0$ is a bias term, $\w\in\R^D$ are weights and $\boldsymbol\epsilon$ is again Gaussian random noise, $p(\boldsymbol\epsilon)=\N(\boldsymbol\epsilon\mid 0,\sigma^2I_D)$.
+\begin{questions}
+\question For both models, write down the likelihood, $p(\x\mid \z)$ and $p(t\mid\x)$, respectively. Differences? Similarities?
+\question What is the major difference between the models? \emph{Hints:} try looking at the predictive distribution $p(\x)$ and $p(t)$, respectively, by marginalizing. Why do we fail for $p(t)$? What is different between the latent variables $\z$ and the input variables $\x$?
+\question Once we introduce basis functions $\phi_j(\x)$, write down the linear regression model corresponding to the above fully linear regression. What PCA model does this most closely correspond to?
+\question Compare the minimum-error formulation of $\W$ in PCA to the maximum likelihood estimate of $\w$ in linear regression (eigenvectors versus minimal least squares). What are the similarities and what is different? \emph{Hint:} draw a point cloud and a linear ``subspace'' (linear manifold more precisely, because the origin is not necessarily contained in it), and visualize what errors are minimized in each case.
+\question In class we have seen that the maximum likelihood estimate of the weights is found by minimizing the data error function:
+$$\frac{1}{2}\sum_{n=1}^N \left(t_n - \w^T\phi(\x_n)\right)^2,$$
+where we had adopted the convention $\phi_0(\x) = 1$. Let's make the bias term $w_0$ more explicit by writing:
+$$\frac{1}{2}\sum_{n=1}^N \left(t_n - w_0 - \sum_{j=1}^{M-1}w_j\phi_j(\x_n)\right)^2,$$
+instead. Determine the maximum likelihood estimate for $w_0$ from this, explicitly, and discuss it.
+\end{questions}
+
+\section{Bayesian linear regression}
+The data-likelihood of the linear regression model considered above, based on observed data $\X=\{\x_1,\ldots,\x_N\}$ and target variables $\t = (t_1,\ldots,t_N)$, is given by 
+$$p(\t\mid \X,\w,\beta) = \prod_{n=1}^N\N(t_n\mid \w^T\phi(\x_n), \beta^{-1}),$$
+where $\beta$ $(=1/\sigma^2)$ is the noise precision parameter (assumed known).
+Instead of just maximum likelihood estimation for $\w$, let's now assume a Gaussian prior distribution on the parameters $\w\in\R^M$ (including $w_0$, again):
+$$p(\w) = \N(\w\mid \m_0, \S_0 )$$
+for $\m_0$ and $\S_0$ given mean and covariance matrix.
+The resulting posterior distribution is Gaussian:
+$$p(\w\mid \t) = \N(\w\mid \m_N, \S_N).$$
+\begin{questions}
+\question Show that the mean and covariance of the posterior are given by 
+$$\m_N=\S_N(\S_0^{-1}\m_0 + \beta\Phi^T\t)$$ and $$\S_N^{-1}=\S_0^{-1}+\beta\Phi^T\Phi,$$ where $\Phi$ is the data design matrix. \emph{Hint:} see page 93 of PRML.
+\end{questions}
+
+\end{document}

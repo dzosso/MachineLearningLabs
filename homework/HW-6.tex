@@ -1,0 +1,159 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+\usepackage{tikz}
+\usepackage{array,booktabs}
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+\DeclareMathOperator{\Conv}{Conv}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\W}{\mathbf W}
+\renewcommand{\S}{\mathbf S}
+\newcommand{\K}{\mathbf K}
+\newcommand{\x}{\mathbf x}
+\newcommand{\w}{\mathbf w}
+\newcommand{\z}{\mathbf z}
+\renewcommand{\t}{\mathbf t}
+\renewcommand{\b}{\mathbf b}
+\newcommand{\m}{\mathbf m}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\u}{\mathbf u}
+\renewcommand{\v}{\mathbf v}
+\newcommand{\N}{\mathcal N}
+\newcommand{\bigmid}{\mathrel{}\middle|\mathrel{}}
+\newcommand{\Perp}{\mathrel{\perp\!\!\!\!\!\perp}}
+
+\setlength\parindent{0pt}
+\begin{document}
+
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Homework 6}}\\[2mm]
+
+
+\textbf{Not collected, not graded}.
+
+
+
+\section*{Some theory (review from Math 164)}
+Consider the following \textbf{minimization} problem:
+$$\min_\x f(\x)\qquad \text{s.t.} \qquad \begin{cases}g_i(\x) \leq 0\\ h_j(\x) = 0\end{cases}$$
+where $\x\in\R^n$ is the optimization variable, $f$ is the objective or cost function, $g_i$, $i=1,\ldots,m$ are the inequality constraint functions, and $h_j$, $j=1,\ldots,l$ are the equality constraint functions. (Mind the $\leq$!)
+
+We can write the corresponding Lagrangian function:
+$$L(\x,\mu_i,\lambda_j) := f(\x) + \sum_i \mu_i g_i(\x) + \sum_j \lambda_j h_j(\x).$$
+The saddle point of this Lagrangian with respect to all its arguments ($\min_\x$, $\max_{\lambda,\mu}$) solves the constrained optimization problem above. (Mind the signs!)
+
+Indeed, the Karush--Kuhn--Tucker conditions are necessary conditions for optimality for $\x^\ast$ to be a local optimum that satisfies the constraints:
+\begin{enumerate}
+\item Stationarity:
+$$\nabla f(\x^\ast) +\sum_i\mu_i^\ast\nabla g_i(\x^\ast) + \sum_j\lambda_j^\ast\nabla h_j(\x^\ast) = 0$$
+\item Primal feasibility:
+$$\begin{aligned}
+g_i(\x^\ast) &\leq 0 &\qquad& \forall i\\
+h_j(\x^\ast) &= 0 &\qquad& \forall j
+\end{aligned}$$
+\item Dual feasibility:
+$$\begin{aligned}\mu_i^\ast &\geq 0 &\qquad& \forall i\end{aligned}$$
+\item Complementary slackness:
+$$\begin{aligned}\mu_i^\ast g_i (\x^\ast)&= 0 &\qquad& \forall i\end{aligned}$$
+\end{enumerate}
+For linear constraints $g_i$ and $h_j$ and convex objective, these conditions are also sufficient. Dual feasibility requires the multipliers associated with the inequality constraint to be non-negative. The complementary slackness says that these multipliers have to be zero whenever the inequality is strict; conversely, whenever the multipliers are positive (active), then the corresponding constraint is an equality constraint.
+
+\section{SVM 1.0}
+The primal SVM problem (with hard constraints) is 
+$$ \min_{\w,b} \frac{1}{2}\|\w\|^2  \qquad \text{s.t.}\qquad t_n(\w^T\phi(\x_n) + b) \geq 1,\quad \forall n.$$
+\begin{questions}
+\question Identify this with the general minimization problem given above and write down the correct Lagrangian function (signs!).
+\question State the associated KKT conditions.
+\question Use these KKT conditions to eliminate the primal variables $(\w,b)$ from the Lagrangian function and obtain the dual optimization problem. Constraints?
+\question Use the KKT conditions to eliminate $\w$ and $b$ from the linear classification model $y(\x) = \w^T\phi(\x) + b$. Which KKT condition makes that the resulting sum will only have few terms?
+\end{questions}
+
+\section{SVM 2.0}
+The primal soft SVM problem is 
+$$ \min_{\w,b,\xi} \frac{1}{2}\|\w\|^2 + \gamma \sum_i\xi_n \qquad \text{s.t.}\qquad \begin{cases}t_n(\w^T\phi(\x_n) + b) \geq 1-\xi_n\\ \xi_n \geq 0\end{cases},\quad \forall n.$$
+\begin{questions}
+\question Identify this with the general maximization problem given above and write down the correct Lagrangian function (signs!).
+\question State the associated KKT conditions.
+\question Use these KKT conditions to eliminate the primal variables $(\w,b,\xi)$ from the Lagrangian function and obtain the dual optimization problem. Constraints? \emph{(Note: the duals of the two SVM problems differ only in a small detail!)}
+\question Use the KKT conditions to eliminate $\w$ and $b$ from the linear classification model $y(\x) = \w^T\phi(\x) + b$. 
+\end{questions}
+
+
+\section{Perceptron}
+Consider a two-bit binary input vector, $\x \in \{-1,1\}^2$. We call logically `false' a value of $-1$, and `true' a value of $+1$. We are interested in training a single perceptron with $w\in\R^3$ (to include the bias term), such that $h( (\x,1)^Tw )$ produces the desired (binary) output, with $$h(\cdot):=\sgn(\cdot)=\begin{cases}-1&\text{if} \quad \cdot \leq 0\\ 1& \text{if} \quad \cdot > 0 \end{cases}$$ the given non-linear binary activation function. Do the following operations \emph{by hand} (read: no computer, calculator, smartphone, ...). Yes, that's possible.
+\begin{questions}
+\question Starting from $w_0=(1,0,0)^T$, train the perceptron to produce the output $t=x_1\wedge x_2$, i.e., the logical \emph{AND} of the input components (i.e., $t=1$ iff $x_1=1$ and $x_2=1$, and $t=-1$ otherwise). How many different datapoints are there, i.e., what is a good choice of $\{\x_n\}$? Define your own sequence of $\x_n=(x_1,x_2)_n$ that you present to the perceptron during stochastic gradient descent training. Stop when you think you have converged (how can you know?). Plot the datapoints and the obtained perceptron decision boundary, at convergence, and check plausibility.
+\question Do the same for $t=x_1\vee x_2$, the logical \emph{OR}, as target output.
+\question Can we do the same for $t=x_1\otimes x_2$, the logical \emph{XOR}? Start by plotting the datapoints and the corresponding target labels. If, then why does a single perceptron fail at this job?
+\end{questions}
+
+
+
+\section{Multilayer perceptron --- Artificial neural networks}
+A multilayer perceptron with just a single layer of hidden nodes can be shown to achieve arbitrary precision to express any target function (see universal approximation theorem; but potentially so at the expense of a number of hidden nodes in that layer increasing exponentially with the dimension of the input data). To express the logical \emph{XOR} function seen above, a simple single-hidden-layer network with just two hidden nodes (plus a hidden bias node) is enough.
+\begin{questions}
+\question Expand the logical \emph{XOR} target function as a simple expression involving only \emph{AND}s, \emph{OR}s, and \emph{NOT}s. 
+\question How does inversion (\emph{NOT}) of a signal happen in a neural network, in terms of the weight connecting it to the next node?
+\question Using these results, you can now combine the three perceptron-like expressions required for the \emph{XOR}-operation into the simple two hidden nodes network. No training is required here, since we are just combining the simple learned single perceptrons of the previous exercise.
+\end{questions}
+
+
+\section{Hidden Markov Models: Conditional independence properties (less important)} In class, we have seen numerous conditional independence instances that were useful in establishing the recursion formula for the Forward $\alpha$ (first five expressions) and the Backward $\beta$ (sixth expression) sweeps of the Baum-Welch algorithm. The seventh and eighth CI statement allow inferring predictive distributions for $p(\x_{N+1}\mid \x_1,\ldots,\x_N)$.
+\begin{questions}
+\question In the Hidden Markov-chains shown on the back, for each of the six properties used for the $\alpha/\beta$-recursions, shade the respective observed variable, and circle the sets of variables that become conditionally independent as a result.
+\question For each of the eight properties, give the corresponding CI statement in the form $A \Perp B \mid C$.
+\question Can you develop a compact expression for the predictive distribution $p(\x_{N+1}\mid \x_1,\ldots,\x_N)$? You should only require the sum and product rules, as well as the conditional independence statements 7 and 8. The result will include $\alpha(z_N)_k=p(\x_1,\ldots,\x_N, z_N=k)$, transition probabilities $p(z_{N+1}=k\mid z_N=j)=A_{jk}$, and emission probabilities $p(\x_{N+1}\mid z_{N+1}=k)$.
+
+ \emph{Hint: this is (13.44) in the book, but try for yourself, first, and make sure to understand each step.}
+\end{questions}
+
+\section{Hidden Markov Models: Viterbi algorithm  (more important)}
+Consider an unfair casino setting, where the dishonest croupier flips a coin which is either fair or loaded. The loaded coin shows head (H) three times as often as tails (T). Starting with a 50-50 chance with either coin, the croupier switches coins on average after one in ten tosses.
+\begin{questions}
+\question Identify the elements of a hidden Markov model: observed and hidden variables, state space, starting state probabilities $\pi_k$, transition matrix $A_{jk}$, emission probabilities $p(x_n\mid z_n)$.
+\question Draw the ``vis. 1'' state-diagram.
+\question Draw the ``vis. 2'' trellis-diagram.
+\question Given the sequence of observed tosses ``HHHTHTTHHT'', infer the most likely coin-state-sequence by using the Viterbi algorithm.
+\end{questions}
+
+\clearpage
+\input{markovchain.tikz}\\[2mm]
+
+\input{markovchain.tikz}\\[2mm]
+
+\input{markovchain.tikz}\\[2mm]
+
+\input{markovchain.tikz}\\[2mm]
+
+\input{markovchain.tikz}\\[2mm]
+
+\input{markovchain.tikz}\\[2mm]
+
+
+\end{document}

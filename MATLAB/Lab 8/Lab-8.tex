@@ -1,0 +1,104 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+\usepackage{url}
+\usepackage[pdftex]{graphicx}
+\usepackage[framed,numbered]{mcode}
+\usepackage{menukeys}
+\usepackage{listings}% http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+
+\setlength\parindent{0pt}
+
+\newcommand{\x}{\mathbf x}
+\newcommand{\w}{\mathbf w}
+\newcommand\note[1]{\textcolor{red}{#1}}
+\begin{document}
+
+
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Lab 3: Deep Learning}}\\[2mm]
+
+\section{Overview: sample code in MATLAB}
+
+\subsection{Single variable regression}
+The goal, here, is to train a scalar regression network $n(x) \approx \sin(x)$ given noisy training data (\directory{MLPregression.m}):
+
+\lstinputlisting{MLP_regression.m}
+%\begin{lstlisting}
+%
+%\end{lstlisting}
+
+Notes:
+\begin{itemize}
+\item the input is scalar, represented as a sequence input node of length 1
+\item each layer of nodes is fully connected to the next; the parameter defines the number of nodes in the next layer
+\item we use $\tanh$-activation for all nodes (differentiable version of sign-function)
+\item the output is scalar, represented as a single node
+\item regression output needs a regressionLayer at the end
+\item training data is noisy, while validation data is clean
+\item we visualize the learned regression model by plotting for nicely space x (lines 31--36)
+\item plotting 1\% of the training data shows the noise that went into training
+\end{itemize}
+
+
+\subsection{Classification network}
+The second example performs binary classification of synthetic swissroll data (includes 2 helper functions).\\
+
+1) \directory{swissroll.m} creates the synthetic data: (coordinates in \mcode{X}, labels in \mcode{Y})
+\lstinputlisting{swissroll.m}\bigskip
+
+2) \directory{plotroll.m} plots the labeled data:
+\lstinputlisting{plotroll.m}\bigskip
+
+The actual MLP code (\directory{MLPclassification.m}):
+\lstinputlisting{MLP_classification.m}
+
+Notes:
+\begin{itemize}
+\item the input is 2D, represented as two input nodes
+\item the output is 2D, since MATLAB only knows 1-in-k coding
+\item classification output needs a softmaxLayer and a classificationLayer
+\item the training/validation labels need to be categorical
+\item we visualize the learned classification landscape by querying an entire grid of feature points (lines 34--36)
+\item recovering numbers from categorical labels is somewhat painful (lines 38--40)
+\end{itemize}
+
+\section{Provided Resources}
+
+\begin{itemize}
+
+%\item \texttt{imgrid.m} - This helper function takes a matrix of observations (first argument)
+%and the dimensions of each observation (second argument) and displays a grid (with size given by
+%the third argument) of observations. May be useful for viewing data.
+\item All the sample functions, given above.
+
+\item \texttt{cbcl1.mat} and \texttt{news.mat} that was given for the SVM-lab.
+\end{itemize}
+
+\section{Guide}
+
+
+\begin{enumerate}
+\item First, play around:
+\begin{enumerate}
+\item Load and run the MLP regression code. You have to use MATLAB with the Deep Learning Toolbox and running version 2019b or newer---MATLAB in the cloud will work, but interaction with the toolbox window might be slow.
+\item Study the plot. What does ``loss'' seem to represent? Is it going down monotonically? Is there a difference between training and validation performance? Explain what you observe!
+\item Change some of the optimization parameters: What happens if you pick an initial learning rate that is 10x, 100x bigger/smaller? Can you find out what an ``Epoch'' is? What does \mcode{sgdm} stand for? Replace \mcode{sgdm} with a different choice (e.g., \mcode{adam} with much bigger initial learning rate, e.g.,  0.1), and see what happens.
+\item Remove a layer of nodes / Add another layer of nodes / Change the number of nodes in each layer (e.g., 5, 20, or 50). What happens?
+\item Repeat the above for the MLP classification code.
+\end{enumerate}
+\item Build/train a two-input--two-output regression network for Cartesian to polar conversion: $n(x,y) \approx \text{cart2pol}(x,y)$. Plot the learned radius and angle landscape to ``see'' how good the training works.
+\item Pick CBCL1 or news data, and build a binary classifier. Put randomly selected portions of the data (10\%, each) away for validation and testing (network trains on 80\% data, validates on 10\% while training, and when done, you run the network on the 10\% left out for testing). What percent correct can you achieve on the training/validation/testing data? How does this compare against SVM (train/test SVM on the same data partitions used for the network). 
+\end{enumerate}
+
+\end{document}

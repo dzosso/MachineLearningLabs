@@ -1,0 +1,58 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+%\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{array,booktabs}
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\x}{\mathbf x}
+\newcommand{\N}{\mathcal N}
+
+\setlength\parindent{0pt}
+\begin{document}
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Quiz 2}}
+
+\hfill\hfill\makebox[0.5\textwidth]{Student Name:\enspace\hrulefill}
+
+
+\begin{questions}
+\question Consider a set of observations $\X=\{\x_1,\ldots,\x_N\}^T$, $\x_n\in\R^D$, drawn independently from a multivariate Gaussian distribution with known covariance matrix $\Sigma$, $\N(\x_n\mid\mu,\Sigma)$.
+\begin{parts}
+\part[2] State the \emph{Maximum Likelihood} problem of finding the best estimate for the Gaussian mean, $\mu_\text{ML}$, given the observed data $\X$ (\emph{Hint:} Your answer should include $\N(\x_n\mid\mu,\Sigma)$):
+$$\mu_\text{ML}=\argmax_{\mu}\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad$$\vspace{0.5in}
+\part[1] What is the Maximum Likelihood estimate of the mean (actual solution to (a))?$$\mu_\text{ML}=\qquad\qquad\qquad\qquad\qquad$$\vspace{.5in}
+\end{parts}
+\question[1] In \emph{Bayesian inference}, we maximize the \emph{posterior probability} $p(\mu\mid \X)\propto p(\X\mid\mu,\Sigma)p(\mu)$, instead. Considering the prior $p(\mu)=\N(\mu\mid 0, \Sigma_0)$, \textbf{how will the inferred $\mu_\text{MAP}$ differ from $\mu_\text{ML}$}? (math expression or word answer is ok)
+\end{questions}
+
+
+\end{document}

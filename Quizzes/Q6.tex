@@ -1,0 +1,57 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\x}{\mathbf x}
+
+\newcommand{\w}{\mathbf w}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\b}{\mathbf b}
+\renewcommand{\t}{\mathbf t}
+\newcommand{\N}{\mathcal N}
+
+\setlength\parindent{0pt}
+\begin{document}
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Quiz 6}}
+
+\hfill\hfill\makebox[0.5\textwidth]{Student Name:\enspace\hrulefill}\\
+
+Consider points $\x_1,\ldots,\x_N\in\R^D$ and integer $K>1$. $K$-means aims at minimizing the within cluster variance:
+$$J(\boldsymbol\mu,l|\x_1,\ldots,\x_N) = \sum_{n=1}^N\sum_{k=1}^K l_{nk}|\x_n-\boldsymbol\mu_k|^2$$
+where each $\boldsymbol\mu_k\in\R^D$ is the center of cluster $k$, and $l_{nk}\in\{0,1\}$, s.t. $l_{nk}=1$ iff sample $\x_n$ is assigned to cluster $k$.
+\begin{questions}
+\question[1] What are the two alternating steps of the $k$-means algorithm?\\[0.5in]
+1.\hspace{0.4\textwidth}2.\vspace{0.5in}
+\question[1] Does the algorithm converge? If yes, to what?\vspace{1in}
+\question[1] Label the two steps of $k$-means above as either \textbf{E} or \textbf{M} step in a EM-framework.\\[.5in]
+\question[1] Briefly: What is the main difference between $k$-means and EM for Gaussian mixture?
+\end{questions}
+
+\end{document}

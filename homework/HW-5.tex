@@ -1,0 +1,135 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+\usepackage{tikz}
+\usepackage{array,booktabs}
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+\DeclareMathOperator{\Conv}{Conv}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\W}{\mathbf W}
+\renewcommand{\S}{\mathbf S}
+\newcommand{\K}{\mathbf K}
+\newcommand{\x}{\mathbf x}
+\newcommand{\w}{\mathbf w}
+\newcommand{\z}{\mathbf z}
+\renewcommand{\t}{\mathbf t}
+\renewcommand{\b}{\mathbf b}
+\newcommand{\m}{\mathbf m}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\u}{\mathbf u}
+\renewcommand{\v}{\mathbf v}
+\newcommand{\N}{\mathcal N}
+\newcommand{\bigmid}{\mathrel{}\middle|\mathrel{}}
+
+\setlength\parindent{0pt}
+\begin{document}
+
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Homework 5}}\\[2mm]
+
+
+\textbf{Not collected, not graded}.
+
+
+
+
+\section{AdaBoost}
+\begin{questions}
+\question What is a weak classifier?
+\question What is a strong classifier?
+\question How does AdaBoost select the weak classifiers? 
+\question What is the importance of modifying the sample weights between weak classifier selection?
+\end{questions}
+
+
+\section{$K$-means clustering}
+We are given points $\x_1,\ldots,\x_N\in\R^D$ and an integer $K>1$, and our goal is to minimize the within cluster variance:
+$$J(\{\boldsymbol\mu_k\},\{l_n\})=\sum_{n=1}^N |\x_n - \boldsymbol\mu_{l_n}|^2$$
+where $\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\in\R^D$ are the $K$ cluster centers, and $l_1,\ldots,l_N\in\{1,\ldots,K\}$ are the cluster assignments. You have seen the popular Lloyd's algorithm in class, to find an approximate solution by optimizing $\{\boldsymbol\mu_k\}$ and $\{l_n\}$, alternately.
+\begin{questions}
+\question Show that Lloyd's algorithm is always guaranteed to converge (=stop) in a finite number of steps. For simplicity assume that $\forall n\in\{1,\ldots,N\}\colon \forall j\neq k\colon |\x_n-\boldsymbol\mu_k|^2 \neq |\x_n-\boldsymbol\mu_j|^2$, i.e. there will never be a tie to be broken when assigning clusters.
+\emph{Hint}: think about how many possible cluster assignments there are, and how the objective function $J(\{\boldsymbol\mu_k\},\{l_n\})$ changes at each step.
+\question Does this mean that Lloyd's algorithm always converges to the global optimum?
+\question We have assumed that the number of clusters, $K$, is being revealed to us by some benevolent oracle (in other words: picking the right $K$ is a difficult problem). Explain how the exact minimum of the $K$-means objective function behaves (on any dataset) as we increase $K$ from $1$ to $N$.
+\question If we were to run $K$-means on a given dataset for all $K$ from 1 to $N$, and plot the objective function value for each $K$, could you think of a strategy to deduce the optimal number of clusters from that plot?
+\end{questions}
+
+
+\section{Expectation--Maximization for Gaussian mixture models}
+A Gaussian mixture model is a family of distributions of the following form:
+$$p(\x) :=\sum_{k=1}^K \pi_k \N(\x\mid\boldsymbol\mu_k,\boldsymbol\Sigma_k)$$
+where the mixture weights satisfy
+$$\sum_{k=1}^K\pi_k=1,\qquad \pi_k \geq 0, \quad k\in\{1,\ldots,K\}$$
+We introduce a latent variable $z_n\in\{1,\ldots,K\}$, that encodes the class assignment of sample $n$. 
+
+Starting from an initialization for $\boldsymbol\mu_k$, $\boldsymbol\Sigma_k$, and $\pi_k$, $k\in\{1,\ldots,K\}$, E-M iterates the following two steps:
+\begin{enumerate}
+\item E-step: $$\gamma_{n,j} := p\left( z_n = j \bigmid \x_n, \{(\boldsymbol\mu_k, \boldsymbol\Sigma_k, \pi_k )\}_{k=1}^K \right)$$
+i.e., we estimate the ``responsibility'' $\gamma_{n,j}$ of component $j$ for sample $n$.
+\item M-step: $$\{(\boldsymbol\mu_k, \boldsymbol\Sigma_k, \pi_k )\}_{k=1}^K = \argmax\biggl\{ \sum_{n=1}^N\sum_{k=1}^K \gamma_{n,k}\ln\left(\pi_k\N\left(\x_n\mid \boldsymbol\mu_k,\boldsymbol\Sigma_k\right) \right)  \biggr\}$$
+i.e., we maximize the parameters of each component $k$ considering the $n$ samples weighted by the responsibility $\gamma_{n,k}$.
+\end{enumerate}
+\begin{questions}
+\question Derive the M-step updates for $\boldsymbol\mu_k$.
+\question Derive the M-step updates for $\pi_k$. \emph{Hint}: remember the summation constraint on $\pi_k$!
+\question Consider a simplified Gaussian mixture model, where all components share the same covariance matrix $\boldsymbol\Sigma_k=\boldsymbol\Sigma$. Derive the update rule for $\boldsymbol\Sigma$ in the M-step. This answer can rely on the value $\boldsymbol\mu_k$ already estimated at the current M-step.
+\question Consider an even simpler Gaussian mixture model, where the shared covariance matrix takes the isotropic form, $\boldsymbol\Sigma = \sigma^2I_D$, for some $\sigma^2>0$ \emph{known}. Given the data, we estimate the means $\{\boldsymbol\mu_k\}$ of each component and the mixture weights $\{\pi_k\}$ with E-M. Assume that 
+\begin{itemize}
+\item the mixture weights $\{\pi_k\}$ are bounded away from zero, i.e. $\exists \epsilon>0$ such that $\forall k\in\{1,\ldots,K\}\colon \pi_k\geq \epsilon$, throughout iterations.
+\item there will be no ties throughout the iterations: $\forall n\in\{1,\ldots,N\}\colon \forall j\neq k\colon |\x_n-\boldsymbol\mu_k|^2 \neq |\x_n-\boldsymbol\mu_j|^2$
+\end{itemize}
+Show that as $\sigma^2\to0$, the E-step converges to the update rule for the labels $l$ in Lloyd's algorithm, i.e., the soft assignment becomes hard. \emph{Hint}: the responsibility is computed like a ``soft-max''...
+\end{questions}
+
+\section{Kernel lego}
+
+\begin{questions}
+\question Consider the candidate kernel $k(\x,\y) := (c + \x^T\y)^2$, $c>0$. 
+\begin{parts}
+\part Using the lego table seen in class (also: PRML p. 296), show that this is an actual kernel.
+\part Determine the corresponding mapping $\x\mapsto\phi(\x)$.
+\end{parts}
+\question Consider the kernel $k(\x,\y) := (\x^T\y)^3$. Find the corresponding mapping $\x\mapsto\phi(\x)$.
+\question Can you find a general expression for the mappings $\x\mapsto\phi(\x)$ corresponding to kernels $$k(\x,\y) := (\x^T\y)^M$$ for $M=1,2,\ldots$ ?
+\question Sketch a proof for $\exp(\x^T\y)$ being a valid kernel. Can you sketch a corresponding (infinite dimensional) mapping?
+\question The radial basis function kernel, $k(\x,\y):=\exp(-\gamma\|\x-\y\|^2)$ is very popular. Can you prove it is an actual kernel? \emph{Hint}: All ``lego''-rules seen in class are fair game. It may be helpful to expand $\exp$ into a series.
+\question What about the more complete version, the ``Gaussian'' kernel, $k(\x,\y):=\exp(-\frac{1}{2}(\x-\y)^T\boldsymbol\Sigma^{-1}(\x-\y))$?
+\end{questions}
+
+\section{Gaussian processes for regression}
+Consider the regression model $t_n = y_n + \epsilon_n$, where $y_n$ is the model prediction and $\epsilon$ is Gaussian noise with precision $\beta$. We want to reproduce and re-derive in detail the results seen in class.
+\begin{questions}
+\question Give the likelihood $p(t_n\mid y_n)$. \emph{Hint}: it's Gaussian...
+\question Looking at an entire set of $\t=(t_1,\ldots,t_N)^T$ and $\y=(y_1,\ldots,y_N)^T$, give their joint likelihood $p(\t\mid\y)$ \textbf{as a multivariate pdf}. \emph{Hint}: it's still Gaussian. Consider the samples to be independent.
+\question The principal idea of the Gaussian process tells us that $p(\y) = \N(\y\mid 0,\K)$, where $\K$ is the kernel-based Gram matrix, with $k_{mn}=k(\x_m,\x_n)$. Compute the marginal $p(\t):=\int p(\t\mid\y)p(\y)\ d\y$.
+\question Extend the previous result to give the $(N+1)$-result for $p(t_{(N+1)},\t)$ seen in class.
+\question Based on the joint $p(t_{(N+1)},\t)$, use pages 87-90 of PRML to get the conditional $p(t_{(N+1)}\mid\t)$, which will allow to make predictions for new $\x_{(N+1)}$.
+\end{questions}
+
+\end{document}

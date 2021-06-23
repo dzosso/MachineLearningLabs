@@ -1,0 +1,60 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+%\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{array,booktabs}
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\x}{\mathbf x}
+\newcommand{\w}{\mathbf w}
+\renewcommand{\t}{\mathbf t}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\b}{\mathbf b}
+\newcommand{\N}{\mathcal N}
+
+\setlength\parindent{0pt}
+\begin{document}
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Quiz 4}}
+
+\hfill\hfill\makebox[0.5\textwidth]{Student Name:\enspace\hrulefill}\\
+
+
+Consider the linear regression model $t = w_0 + \w^T\x + \epsilon$, where $\x\in\R^D$ and $\epsilon$ is Gaussian noise with zero-mean and known covariance $\sigma^2\mathcal I$. We are given $N$ samples $\X=\begin{bmatrix}\x_1&\ldots&\x_N\end{bmatrix}^\top$ with corresponding target variable $\t=\begin{bmatrix}t_1 & \ldots & t_N\end{bmatrix}^\top$.
+\begin{questions}
+\question[1] What and how many parameters are to be learned from the data? How many degrees of freedom?\vspace{1in}
+\question[1] State the maximum likelihood estimation problem for the parameters. (abstractly) \vspace{1.5in}
+\question[2] Take the negative logarithm, then state the corresponding error function/loss minimization. (specific)
+\end{questions}
+
+
+\end{document}

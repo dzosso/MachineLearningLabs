@@ -1,0 +1,69 @@
+\documentclass[11pt,noanswers,addpoints]{exam}
+%\documentclass[11pt,letter]{article}
+\usepackage{pslatex}
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=0.5in,bottom=1in]{geometry}
+
+\usepackage{tikz}
+\usepackage{array,booktabs}
+\usepackage{color}
+
+
+
+\makeatletter
+\let\div\@undefined                        % undefine \div
+\makeatother
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\const}{Const.}
+%\DeclareMathOperator{\Re}{Re}
+%\DeclareMathOperator{\Im}{Im}
+\renewcommand{\boldsymbol}[1]{\pmb{#1}}
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathbf A}
+\newcommand{\x}{\mathbf x}
+\newcommand{\f}{\mathbf f}
+\newcommand{\w}{\mathbf w}
+\newcommand{\y}{\mathbf y}
+\renewcommand{\b}{\mathbf b}
+\renewcommand{\t}{\mathbf t}
+\newcommand{\N}{\mathcal N}
+\newcommand{\K}{\mathbf K}
+
+
+
+\definecolor{light-gray}{gray}{0.9}
+
+
+\setlength\parindent{0pt}
+\begin{document}
+{\Large{\textbf{Machine Learning}}} \\[2mm]
+\textbf{\Huge{Quiz 8}}\\
+
+
+
+\hfill\hfill\makebox[0.5\textwidth]{Student Name:\enspace\hrulefill}\\
+
+\begin{questions}
+\question[2] SVM with \emph{hard} margins: complete the minimization problem 
+$$\min_{\colorbox{light-gray}{\phantom{w,b,$\xi$}}} \biggr\{\colorbox{light-gray}{\phantom{$\Big \vert$\qquad\qquad\qquad\qquad\qquad\qquad}} \biggr\}\quad \text{s.t.}\quad \forall n\colon t_n(w^T\phi(x_n)+b) \geq \colorbox{light-gray}{\phantom{$\Big \vert$w,b,$\xi$}} $$
+\question[2] SVM with \emph{soft} constraints: complete the minimization problem 
+$$\min_{\colorbox{light-gray}{\phantom{w,b,$\xi$}}} \biggr\{\colorbox{light-gray}{\phantom{$\Big \vert$\qquad\qquad\qquad\qquad\qquad\qquad}} \biggr\}\quad \text{s.t.}\quad\forall n\colon
+\begin{cases}t_n(w^T\phi(x_n)+b) \geq \colorbox{light-gray}{\phantom{$\Big \vert$w,b,$\xi$}}\\ \colorbox{light-gray}{\phantom{$\Big \vert$w,b,$\xi$}}\geq 0\end{cases}$$
+\question[1] Which of the above models \emph{fails} when the data is \emph{not linearly separable}?
+\end{questions}
+
+\end{document}
